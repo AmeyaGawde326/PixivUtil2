@@ -64,17 +64,17 @@ def process_image(caller,
 
         # check if already downloaded. images won't be downloaded twice - needed in process_image to catch any download
         # r = db.selectImageByImageId(image_id, cols='save_name')
-        # exists = False
-        # in_db = False
+        exists = False
+        in_db = False
         # if r is not None:
         #     exists = db.cleanupFileExists(r[0])
         #     in_db = True
 
         # skip if already recorded in db and alwaysCheckFileSize is disabled and overwrite is disabled.
-        # if in_db and not config.alwaysCheckFileSize and not config.overwrite and not reencoding:
-        #     PixivHelper.print_and_log(None, f'Already downloaded in DB: {image_id}')
-        #     gc.collect()
-        #     return PixivConstant.PIXIVUTIL_SKIP_DUPLICATE_NO_WAIT
+        if in_db and not config.alwaysCheckFileSize and not config.overwrite and not reencoding:
+            PixivHelper.print_and_log(None, f'Already downloaded in DB: {image_id}')
+            gc.collect()
+            return PixivConstant.PIXIVUTIL_SKIP_DUPLICATE_NO_WAIT
 
         # get the medium page
         try:
