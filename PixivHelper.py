@@ -807,8 +807,6 @@ def download_image(url, filename, res, file_size, overwrite):
 
             # check if downloaded file is complete
             if file_size > 0 and curr == file_size:
-                total_time = (datetime.now() - start_time).total_seconds()
-                print_and_log(None, f' Completed in {Fore.CYAN}{total_time}{Style.RESET_ALL}s ({Fore.RED}{speed_in_str(file_size, total_time)}{Style.RESET_ALL})')
                 break
 
             elif curr == prev:  # no file size info
@@ -1369,7 +1367,7 @@ def get_start_and_end_date():
 
 
 def get_start_and_end_number(start_only=False, total_number_of_page=None):
-    page_num = input('Start Page (default=1): ').rstrip("\r") or 1
+    page_num =  1
     try:
         page_num = int(page_num)
     except BaseException:
@@ -1385,7 +1383,7 @@ def get_start_and_end_number(start_only=False, total_number_of_page=None):
         end_page_num = _config.numberOfPage
 
     if not start_only:
-        end_page_num = input(f'End Page (default= {end_page_num}, 0 for no limit): ').rstrip("\r") or end_page_num
+        end_page_num = end_page_num
         if end_page_num is not None:
             try:
                 end_page_num = int(end_page_num)
@@ -1405,11 +1403,8 @@ def wait(result=None, config=None):
     # Issue#276: add random delay for each post.
     if config is not None and config.downloadDelay > 0:
         a = 0.2  # Minimum value
-        b = 2  # Maximum value
+        b = 1.5  # Maximum value
         delay = a + (b - a) * random.random()
-        message = "Wait for {0:.3}s".format(delay)
-        print_and_log(None, message)
-        time.sleep(delay)
 
 
 def dummy_notifier(type=None, message=None, **kwargs):
