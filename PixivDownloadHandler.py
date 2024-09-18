@@ -67,19 +67,20 @@ def download_image(caller,
             try:
                 is_exists = os.path.isfile(filename_save)
 
-                if not overwrite and not config.alwaysCheckFileSize:
-                    PixivHelper.print_and_log(None, '\rChecking local filename...', newline=False)
-                    if is_exists:
-                        PixivHelper.print_and_log('info', f"\rLocal file exists: {filename}")
-                        return (PixivConstant.PIXIVUTIL_SKIP_DUPLICATE, filename_save)
+                # if not overwrite and not config.alwaysCheckFileSize:
+                #     PixivHelper.print_and_log(None, '\rChecking local filename...', newline=False)
+                #     if is_exists:
+                #         PixivHelper.print_and_log('info', f"\rLocal file exists: {filename}")
+                #         return (PixivConstant.PIXIVUTIL_SKIP_DUPLICATE, filename_save)
+
 
                 # Issue #807
-                if config.checkLastModified and is_exists and image is not None:
-                    local_timestamp = os.path.getmtime(filename_save)
-                    remote_timestamp = time.mktime(image.worksDateDateTime.timetuple())
-                    if local_timestamp == remote_timestamp:
-                        PixivHelper.print_and_log('info', f"\rLocal file timestamp match with remote: {filename} => {image.worksDateDateTime}")
-                        return (PixivConstant.PIXIVUTIL_SKIP_DUPLICATE, filename_save)
+                # if config.checkLastModified and is_exists and image is not None:
+                #     local_timestamp = os.path.getmtime(filename_save)
+                #     remote_timestamp = time.mktime(image.worksDateDateTime.timetuple())
+                #     if local_timestamp == remote_timestamp:
+                #         PixivHelper.print_and_log('info', f"\rLocal file timestamp match with remote: {filename} => {image.worksDateDateTime}")
+                #         return (PixivConstant.PIXIVUTIL_SKIP_DUPLICATE, filename_save)
 
                 if is_exists:
                     remote_file_size = get_remote_filesize(url, referer, config, notifier)
@@ -175,7 +176,7 @@ def download_image(caller,
                 #             return (check_result, db_filename)
 
                 # actual download
-                notifier(type="DOWNLOAD", message=f"Start downloading {url} to {filename_save}")
+                # notifier(type="DOWNLOAD", message=f"Start downloading {url} to {filename_save}")
                 (downloadedSize, filename_save) = perform_download(url, remote_file_size, filename_save, overwrite, config, referer)
 
                 # double check after download, because the file might be deleted due to partial download
@@ -262,7 +263,7 @@ def download_image(caller,
                         PixivHelper.print_and_log('info', ' Image invalid, deleting...')
                         os.remove(filename_save)
                         raise
-                PixivHelper.print_and_log('info', f' Download done ==> {filename_save}')
+                # PixivHelper.print_and_log('info', f' Download done ==> {filename_save}')
 
                 # codecs.open is stateless, so if platform_encoding == utf-8-sig each new line starts from utf-8-sig
                 # this is bad and I feel bad

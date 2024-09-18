@@ -803,7 +803,7 @@ def download_image(url, filename, res, file_size, overwrite):
         while True:
             save.write(res.read(BUFFER_SIZE))
             curr = save.tell()
-            msg_len = print_progress(curr, file_size, msg_len)
+            # msg_len = print_progress(curr, file_size, msg_len)
 
             # check if downloaded file is complete
             if file_size > 0 and curr == file_size:
@@ -1404,7 +1404,7 @@ def wait(result=None, config=None):
         return
     # Issue#276: add random delay for each post.
     if config is not None and config.downloadDelay > 0:
-        delay = random.random() * config.downloadDelay
+        delay = random.random(0.1,2)
         message = "Wait for {0:.3}s".format(delay)
         print_and_log(None, message)
         time.sleep(delay)
