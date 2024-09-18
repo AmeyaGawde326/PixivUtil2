@@ -95,9 +95,9 @@ def process_member(caller,
                     PixivHelper.print_and_log('error', f'Error at processing Artist Info: {sys.exc_info()}')
 
             PixivHelper.print_and_log(None, f'{Fore.LIGHTGREEN_EX}{"Member Name":14}:{Style.RESET_ALL} {artist.artistName}')
-            PixivHelper.print_and_log(None, f'{Fore.LIGHTGREEN_EX}{"Member Avatar":14}:{Style.RESET_ALL} {artist.artistAvatar}')
-            PixivHelper.print_and_log(None, f'{Fore.LIGHTGREEN_EX}{"Member Token":14}:{Style.RESET_ALL} {artist.artistToken}')
-            PixivHelper.print_and_log(None, f'{Fore.LIGHTGREEN_EX}{"Member Backgrd":14}:{Style.RESET_ALL} {artist.artistBackground}')
+            # PixivHelper.print_and_log(None, f'{Fore.LIGHTGREEN_EX}{"Member Avatar":14}:{Style.RESET_ALL} {artist.artistAvatar}')
+            # PixivHelper.print_and_log(None, f'{Fore.LIGHTGREEN_EX}{"Member Token":14}:{Style.RESET_ALL} {artist.artistToken}')
+            # PixivHelper.print_and_log(None, f'{Fore.LIGHTGREEN_EX}{"Member Backgrd":14}:{Style.RESET_ALL} {artist.artistBackground}')
             print_offset_stop = offset_stop if offset_stop < artist.totalImages and offset_stop != 0 else artist.totalImages
             PixivHelper.print_and_log(None, f'Processing images from {offset_start + 1} to {print_offset_stop} of {artist.totalImages}')
 
@@ -113,12 +113,12 @@ def process_member(caller,
             if config.autoAddMember:
                 db.insertNewMember(int(member_id), member_token=artist.artistToken)
 
-            db.updateMemberName(member_id, artist.artistName, artist.artistToken)
+            # db.updateMemberName(member_id, artist.artistName, artist.artistToken)
 
             result = PixivConstant.PIXIVUTIL_NOT_OK
             for image_id in artist.imageList:
                 ui_prefix = f'{Fore.LIGHTGREEN_EX}[{no_of_images} of {artist.totalImages}]{Style.RESET_ALL} '
-                # PixivHelper.print_and_log(None, ui_prefix)
+                PixivHelper.print_and_log(None, ui_prefix)
                 retry_count = 0
                 while True:
                     try:
@@ -152,25 +152,25 @@ def process_member(caller,
                             PixivHelper.print_and_log('error', f"Giving up image_id: {image_id}")
                             return
                         retry_count = retry_count + 1
-                        PixivHelper.print_and_log(None, f"Stuff happened, trying again after 2 second ({retry_count})")
-                        exc_type, exc_value, exc_traceback = sys.exc_info()
-                        traceback.print_exception(exc_type, exc_value, exc_traceback)
-                        PixivHelper.print_and_log("error", f"Error at process_member(): {sys.exc_info()} Member Id: {member_id}")
-                        PixivHelper.print_delay(2)
+                        # PixivHelper.print_and_log(None, f"Stuff happened, trying again after 2 second ({retry_count})")
+                        # exc_type, exc_value, exc_traceback = sys.exc_info()
+                        # traceback.print_exception(exc_type, exc_value, exc_traceback)
+                        # PixivHelper.print_and_log("error", f"Error at process_member(): {sys.exc_info()} Member Id: {member_id}")
+                        
 
                 no_of_images = no_of_images + 1
                 
-                if result in (PixivConstant.PIXIVUTIL_SKIP_DUPLICATE,
-                              PixivConstant.PIXIVUTIL_SKIP_LOCAL_LARGER,
-                              PixivConstant.PIXIVUTIL_SKIP_DUPLICATE_NO_WAIT):
-                    updated_limit_count = updated_limit_count + 1
-                    if config.checkUpdatedLimit != 0 and updated_limit_count >= config.checkUpdatedLimit:
-                        PixivHelper.safePrint(f"Skipping member: {member_id}")
-                        db.updateLastDownloadDate(member_id)
-                        PixivBrowserFactory.getBrowser(config=config).clear_history()
-                        return
-                    gc.collect()
-                    continue
+                # if result in (PixivConstant.PIXIVUTIL_SKIP_DUPLICATE,
+                #               PixivConstant.PIXIVUTIL_SKIP_LOCAL_LARGER,
+                #               PixivConstant.PIXIVUTIL_SKIP_DUPLICATE_NO_WAIT):
+                #     updated_limit_count = updated_limit_count + 1
+                #     if config.checkUpdatedLimit != 0 and updated_limit_count >= config.checkUpdatedLimit:
+                #         PixivHelper.safePrint(f"Skipping member: {member_id}")
+                #         db.updateLastDownloadDate(member_id)
+                #         PixivBrowserFactory.getBrowser(config=config).clear_history()
+                #         return
+                #     gc.collect()
+                #     continue
                 if result == PixivConstant.PIXIVUTIL_KEYBOARD_INTERRUPT:
                     choice = input("Keyboard Interrupt detected, continue to next image (Y/N)").rstrip("\r")
                     if choice.upper() == 'N':
