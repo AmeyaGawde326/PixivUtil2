@@ -1404,7 +1404,9 @@ def wait(result=None, config=None):
         return
     # Issue#276: add random delay for each post.
     if config is not None and config.downloadDelay > 0:
-        delay = random.random(0.1,2)
+        a = 0.2  # Minimum value
+        b = 2  # Maximum value
+        delay = a + (b - a) * random.random()
         message = "Wait for {0:.3}s".format(delay)
         print_and_log(None, message)
         time.sleep(delay)
