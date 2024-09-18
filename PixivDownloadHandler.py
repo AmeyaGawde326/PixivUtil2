@@ -128,51 +128,51 @@ def download_image(caller,
                     if check_result != PixivConstant.PIXIVUTIL_OK:
                         return (check_result, filename)
 
-                # check based on filename stored in DB using image id
-                if image is not None:
-                    row = None
-                    db_filename = None
-                    # Issue #1084
-                    if download_from == PixivConstant.DOWNLOAD_PIXIV:
-                        if page is not None:
-                            row = db.selectImageByImageIdAndPage(image.imageId, page)
-                            if row is not None:
-                                db_filename = row[2]
-                        else:
-                            row = db.selectImageByImageId(image.imageId)
-                            if row is not None:
-                                db_filename = row[3]
-                    elif download_from == PixivConstant.DOWNLOAD_FANBOX:
-                        if page is not None:
-                            row = db.selectFanboxImageByImageIdAndPage(image.imageId, page)
-                        else:
-                            row = db.selectFanboxImageByImageIdAndPage(image.imageId, -1)  # Cover image
-                        if row is not None:
-                            db_filename = row[2]
-                    elif download_from == PixivConstant.DOWNLOAD_SKETCH:
-                        if page is not None:
-                            row = db.selectSketchImageByImageIdAndPage(image.imageId, page)
-                        else:
-                            row = db.selectSketchImageByImageIdAndPage(image.imageId, 0)
-                        if row is not None:
-                            db_filename = row[2]
+                # # check based on filename stored in DB using image id
+                # if image is not None:
+                #     row = None
+                #     db_filename = None
+                #     # Issue #1084
+                #     if download_from == PixivConstant.DOWNLOAD_PIXIV:
+                #         if page is not None:
+                #             row = db.selectImageByImageIdAndPage(image.imageId, page)
+                #             if row is not None:
+                #                 db_filename = row[2]
+                #         else:
+                #             row = db.selectImageByImageId(image.imageId)
+                #             if row is not None:
+                #                 db_filename = row[3]
+                #     elif download_from == PixivConstant.DOWNLOAD_FANBOX:
+                #         if page is not None:
+                #             row = db.selectFanboxImageByImageIdAndPage(image.imageId, page)
+                #         else:
+                #             row = db.selectFanboxImageByImageIdAndPage(image.imageId, -1)  # Cover image
+                #         if row is not None:
+                #             db_filename = row[2]
+                #     elif download_from == PixivConstant.DOWNLOAD_SKETCH:
+                #         if page is not None:
+                #             row = db.selectSketchImageByImageIdAndPage(image.imageId, page)
+                #         else:
+                #             row = db.selectSketchImageByImageIdAndPage(image.imageId, 0)
+                #         if row is not None:
+                #             db_filename = row[2]
 
-                    if db_filename is not None and os.path.isfile(db_filename):
-                        old_size = os.path.getsize(db_filename)
-                        # if file_size < 0:
-                        #     file_size = get_remote_filesize(url, referer)
-                        check_result = PixivHelper.check_file_exists(config, db_filename, remote_file_size, old_size)
-                        if check_result != PixivConstant.PIXIVUTIL_OK:
-                            ugo_name = None
-                            if db_filename.endswith(".zip"):
-                                ugo_name = filename[:-4] + ".ugoira"
-                                if config.createUgoira:
-                                    handle_ugoira(image, db_filename, config, notifier)
-                            if db_filename.endswith(".ugoira"):
-                                ugo_name = db_filename
-                                handle_ugoira(image, db_filename, config, notifier)
+                #     if db_filename is not None and os.path.isfile(db_filename):
+                #         old_size = os.path.getsize(db_filename)
+                #         # if file_size < 0:
+                #         #     file_size = get_remote_filesize(url, referer)
+                #         check_result = PixivHelper.check_file_exists(config, db_filename, remote_file_size, old_size)
+                #         if check_result != PixivConstant.PIXIVUTIL_OK:
+                #             ugo_name = None
+                #             if db_filename.endswith(".zip"):
+                #                 ugo_name = filename[:-4] + ".ugoira"
+                #                 if config.createUgoira:
+                #                     handle_ugoira(image, db_filename, config, notifier)
+                #             if db_filename.endswith(".ugoira"):
+                #                 ugo_name = db_filename
+                #                 handle_ugoira(image, db_filename, config, notifier)
 
-                            return (check_result, db_filename)
+                #             return (check_result, db_filename)
 
                 # actual download
                 notifier(type="DOWNLOAD", message=f"Start downloading {url} to {filename_save}")

@@ -200,18 +200,18 @@ def process_image(caller,
         if download_image_flag:
             if artist is None:
                 PixivHelper.print_and_log(None, f'{Fore.LIGHTCYAN_EX}{"Member Name":14}:{Style.RESET_ALL} {image.artist.artistName}')
-                PixivHelper.print_and_log(None, f'{Fore.LIGHTCYAN_EX}{"Member Avatar":14}:{Style.RESET_ALL} {image.artist.artistAvatar}')
-                PixivHelper.print_and_log(None, f'{Fore.LIGHTCYAN_EX}{"Member Token":14}:{Style.RESET_ALL} {image.artist.artistToken}')
-                PixivHelper.print_and_log(None, f'{Fore.LIGHTCYAN_EX}{"Member Backgrd":14}:{Style.RESET_ALL} {image.artist.artistBackground}')
+                # PixivHelper.print_and_log(None, f'{Fore.LIGHTCYAN_EX}{"Member Avatar":14}:{Style.RESET_ALL} {image.artist.artistAvatar}')
+                # PixivHelper.print_and_log(None, f'{Fore.LIGHTCYAN_EX}{"Member Token":14}:{Style.RESET_ALL} {image.artist.artistToken}')
+                # PixivHelper.print_and_log(None, f'{Fore.LIGHTCYAN_EX}{"Member Backgrd":14}:{Style.RESET_ALL} {image.artist.artistBackground}')
 
             PixivHelper.print_and_log(None, f"{Fore.LIGHTCYAN_EX}{'Title':10}:{Style.RESET_ALL} {image.imageTitle}")
             if len(image.translated_work_title) > 0:
                 PixivHelper.print_and_log(None, f"{Fore.LIGHTCYAN_EX}{'TL-ed Title':10}: {image.translated_work_title}")
             tags_str = ', '.join(image.imageTags).replace("AI-generated", f"{Fore.LIGHTYELLOW_EX}AI-generated{Style.RESET_ALL}")
-            PixivHelper.print_and_log(None, f"{Fore.LIGHTCYAN_EX}{'Tags':10}:{Style.RESET_ALL} {tags_str}")
-            PixivHelper.print_and_log(None, f"{Fore.LIGHTCYAN_EX}{'Date':10}:{Style.RESET_ALL} {image.worksDateDateTime}")
-            PixivHelper.print_and_log(None, f"{Fore.LIGHTCYAN_EX}{'Mode':10}:{Style.RESET_ALL} {image.imageMode}")
-            PixivHelper.print_and_log(None, f"{Fore.LIGHTCYAN_EX}{'Bookmarks':10}:{Style.RESET_ALL} {image.bookmark_count}")
+            # PixivHelper.print_and_log(None, f"{Fore.LIGHTCYAN_EX}{'Tags':10}:{Style.RESET_ALL} {tags_str}")
+            # PixivHelper.print_and_log(None, f"{Fore.LIGHTCYAN_EX}{'Date':10}:{Style.RESET_ALL} {image.worksDateDateTime}")
+            # PixivHelper.print_and_log(None, f"{Fore.LIGHTCYAN_EX}{'Mode':10}:{Style.RESET_ALL} {image.imageMode}")
+            # PixivHelper.print_and_log(None, f"{Fore.LIGHTCYAN_EX}{'Bookmarks':10}:{Style.RESET_ALL} {image.bookmark_count}")
 
             if config.useSuppressTags:
                 for item in caller.__suppressTags:
@@ -243,6 +243,8 @@ def process_image(caller,
             current_img = 1
             total = len(source_urls)
             for img in source_urls:
+                if current_img > 2:
+                    break
                 prefix = f"{Fore.CYAN}[{current_img}/{total}]{Style.RESET_ALL} "
                 PixivHelper.print_and_log(None, f'{prefix}Image URL : {img}')
                 url = os.path.basename(img)

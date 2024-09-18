@@ -84,8 +84,8 @@ def process_tags(caller,
                     PixivHelper.print_and_log("warn", f'Server did not return images, expected to have more (Total Post = {_last_search_result.availableImages}, current max posts = {PixivTags.POSTS_PER_PAGE * i}).')
                     # wait at least 2 minutes before retry
                     delay = config.timeout
-                    if delay < 120:
-                        delay = 120
+                    if delay < 30:
+                        delay = 30
                     PixivHelper.print_and_log(None, f"Waiting for {delay} seconds before retrying.")
                     PixivHelper.print_delay(delay)
                     empty_page_retry = empty_page_retry + 1
