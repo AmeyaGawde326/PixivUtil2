@@ -235,7 +235,7 @@ def menu_download_by_member_id(opisvalid, args, options):
         elif skipSketchPrompt.lower() == 'n':
             print("Excluding Pixiv Sketch.")
         else:
-            include_sketch_ask = input('Include Pixiv Sketch [y/n, default is no]? ').rstrip("\r") or 'n'
+            include_sketch_ask ='n'
             if include_sketch_ask.lower() == 'y':
                 include_sketch = True
 
@@ -991,7 +991,7 @@ def menu_fanbox_download_by_id(op_is_valid, args, options):
 
     else:
         member_ids = input("Artist/Creator IDs = ").rstrip("\r")
-        end_page = int(input("End page (default is 0) = ").rstrip("\r") or 0)
+        end_page = int( 0)
         member_ids = PixivHelper.get_ids_from_csv(member_ids, is_string=True)
 
     PixivHelper.print_and_log('info', f"Member IDs: {member_ids}")

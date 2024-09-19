@@ -227,7 +227,7 @@ def download_image(caller,
                         img = Image.open(fp)
                         img.load()
                         fp.close()
-                        PixivHelper.print_and_log('info', ' Image verified.')
+                        # PixivHelper.print_and_log('info', ' Image verified.')
                     except BaseException:
                         if fp is not None:
                             fp.close()
@@ -316,10 +316,6 @@ def download_image(caller,
         except BaseException:
             if temp_error_code is None:
                 temp_error_code = PixivException.DOWNLOAD_FAILED_OTHER
-            caller.ERROR_CODE = temp_error_code
-            exc_type, exc_value, exc_traceback = sys.exc_info()
-            traceback.print_exception(exc_type, exc_value, exc_traceback)
-            PixivHelper.print_and_log('error', f'Error at download_image(): {sys.exc_info()} at {url} ({caller.ERROR_CODE})')
 
             if retry_count < max_retry:
                 retry_count = retry_count + 1

@@ -793,7 +793,7 @@ def download_image(url, filename, res, file_size, overwrite):
         filename = filename.split("?")[0]
         filename = sanitize_filename(filename)
         save = open(filename + '.pixiv', 'wb+', 4096)
-        print_and_log('info', f'File is saved to {filename}')
+        # print_and_log('info', f'File is saved to {filename}')
 
     # download the file
     prev = 0
@@ -808,7 +808,6 @@ def download_image(url, filename, res, file_size, overwrite):
             # check if downloaded file is complete
             if file_size > 0 and curr == file_size:
                 break
-
             elif curr == prev:  # no file size info
                 total_time = (datetime.now() - start_time).total_seconds()
                 print_and_log(None, f' Completed in {Fore.CYAN}{total_time}{Style.RESET_ALL}s ({Fore.RED}{speed_in_str(curr, total_time)}{Style.RESET_ALL})')
@@ -817,7 +816,6 @@ def download_image(url, filename, res, file_size, overwrite):
             prev = curr
     except OSError as ex:
         print_and_log('error', f"Error at download_image(): Cannot save {url} to {filename}: {sys.exc_info()}", exception=ex)
-        input("Press enter to continue or Ctrl+C to abort.")  # Issue #1187
         raise
 
     finally:

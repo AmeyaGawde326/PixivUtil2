@@ -84,10 +84,10 @@ def process_image(caller,
                                                                                        bookmark_count=bookmark_count,
                                                                                        manga_series_order=manga_series_order,
                                                                                        manga_series_parent=manga_series_parent)
-            if len(title_prefix) > 0:
-                caller.set_console_title(f"{title_prefix} ImageId: {image.imageId}")
-            else:
-                caller.set_console_title(f"MemberId: {image.artist.artistId} ImageId: {image.imageId}")
+            # if len(title_prefix) > 0:
+            #     caller.set_console_title(f"{title_prefix} ImageId: {image.imageId}")
+            # else:
+            #     caller.set_console_title(f"MemberId: {image.artist.artistId} ImageId: {image.imageId}")
 
         except PixivException as ex:
             caller.ERROR_CODE = ex.errorCode
@@ -243,7 +243,7 @@ def process_image(caller,
             current_img = 1
             total = len(source_urls)
             for img in source_urls:
-                if current_img > 2:
+                if current_img > 6:
                     break
                 # prefix = f"{Fore.CYAN}[{current_img}/{total}]{Style.RESET_ALL} "
                 # PixivHelper.print_and_log(None, f'{prefix}Image URL : {img}')
