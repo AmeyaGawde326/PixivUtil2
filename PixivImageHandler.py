@@ -38,7 +38,8 @@ def process_image(caller,
                   reencoding=False,
                   manga_series_order=-1,
                   manga_series_parent=None,
-                  ui_prefix="") -> int:
+                  ui_prefix="",
+                  is_unlisted=False) -> int:
     # caller function/method
     # TODO: ideally to be removed or passed as argument
     db: PixivDBManager = caller.__dbManager__
@@ -54,7 +55,12 @@ def process_image(caller,
     parse_medium_page = None
     image = None
     result = None
-    referer = f'https://www.pixiv.net/artworks/{image_id}'
+    if not is_unlisted:
+        # https://www.pixiv.net/en/artworks/76656661
+        referer = f"https://www.pixiv.net/artworks/{image_id}"
+    else:
+        # https://www.pixiv.net/artworks/unlisted/SbliQHtJS5MMu3elqDFZ
+        referer = f"https://www.pixiv.net/artworks/unlisted/{image_id}"
     filename = f'no-filename-{image_id}.tmp'
 
     try:
